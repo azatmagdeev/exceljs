@@ -1,4 +1,7 @@
 // eslint-disable-next-line require-jsdoc
+import {$} from '@core/dom';
+
+// eslint-disable-next-line require-jsdoc
 export class Excel {
   // eslint-disable-next-line require-jsdoc
   constructor(selector, options) {
@@ -8,14 +11,12 @@ export class Excel {
 
   // eslint-disable-next-line require-jsdoc
   getRoot() {
-    const $root = document.createElement('div')
+    const $root = $.create('div', 'excel')
     this.components.forEach((Component)=>{
-      const component = new Component()
-      // console.log(component.toHTML())
-      $root.insertAdjacentHTML(
-          'beforeend',
-          component.toHTML()
-      )
+      const $el = $.create('div', Component.className)
+      const component = new Component($el)
+      $el.innerHTML = component.toHTML()
+      $root.append($el)
     })
     return $root
   }
