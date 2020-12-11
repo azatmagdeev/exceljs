@@ -3,26 +3,26 @@ import {$} from '@core/dom';
 
 // eslint-disable-next-line require-jsdoc
 export class Excel {
-  // eslint-disable-next-line require-jsdoc
   constructor(selector, options) {
-    this.$el = document.querySelector(selector)
+    this.$el = $(selector)
     this.components = options.components || []
   }
 
-  // eslint-disable-next-line require-jsdoc
   getRoot() {
     const $root = $.create('div', 'excel')
     this.components.forEach((Component)=>{
       const $el = $.create('div', Component.className)
       const component = new Component($el)
-      $el.innerHTML = component.toHTML()
+
+      $el.html(component.toHTML())
+      // eslint-disable-next-line no-debugger
+      // debugger
       $root.append($el)
     })
+    console.log($root.styles)
     return $root
   }
-  /**
-   *
-   */
+
   render() {
     this.$el.append(this.getRoot())
   }
