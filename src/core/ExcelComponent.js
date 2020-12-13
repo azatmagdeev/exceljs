@@ -1,7 +1,14 @@
 import {DOMListener} from '@core/DOMListener';
 
-// eslint-disable-next-line require-jsdoc
 export class ExcelComponent extends DOMListener {
+  constructor($root, options = {}) {
+    super($root, options.listeners);
+  }
+
+  init() {
+    this.initDOMListeners()
+  }
+
   /**
    * Возвращает шаблон компонента
    * @return {string}
