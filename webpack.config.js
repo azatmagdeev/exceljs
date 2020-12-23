@@ -7,8 +7,8 @@ const path = require('path')
 const isProd = process.env.NODE_ENV === 'production'
 const isDev = !isProd
 
-console.log({isProd})
-console.log({isDev})
+// console.log({isProd})
+// console.log({isDev})
 
 const filename = (ext) => isDev ? `bundle.${ext}` : `bundle.[hash].${ext}`
 
