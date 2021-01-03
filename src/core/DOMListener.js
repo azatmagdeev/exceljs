@@ -17,12 +17,16 @@ export class DOMListener {
         не реализован у компонента ${this.name}`
         )
       }
-      this.$root.on(listener, this[method].bind(this))
+      this[method] = this[method].bind(this)
+      this.$root.on(listener, this[method])
     })
   }
 
   removeDOMListeners() {
-
+    this.listeners.map((listener) => {
+      const method = getMethodName(listener)
+      this.$root.off(listener, this[method])
+    })
   }
 }
 

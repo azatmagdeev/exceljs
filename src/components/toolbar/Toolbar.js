@@ -1,9 +1,19 @@
 import {ExcelComponent} from '@core/ExcelComponent';
 
-// eslint-disable-next-line require-jsdoc
 export class Toolbar extends ExcelComponent {
   static className = 'excel__toolbar'
-  // eslint-disable-next-line require-jsdoc
+
+  constructor($root) {
+    super($root, {
+      name: 'Toolbar',
+      listeners: ['click'],
+    })
+  }
+
+  onClick(e) {
+    console.log(e.target)
+  }
+
   toHTML() {
     return `
      <div class="button">

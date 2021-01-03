@@ -10,6 +10,10 @@ export class ExcelComponent extends DOMListener {
     this.initDOMListeners()
   }
 
+  destructor() {
+    this.removeDOMListeners()
+  }
+
   /**
    * Возвращает шаблон компонента
    * @return {string}
