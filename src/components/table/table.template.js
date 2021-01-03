@@ -4,24 +4,24 @@ const CODES = {
 }
 
 function createCol(content) {
-  return `
-    <div class="column">${content}</div>
-  `
+  return `<div class="column">
+            ${content}
+            <div class="col-resize"></div>
+          </div>`
 }
 
 function createCell(content) {
-  return `
-    <div class="cell" contenteditable >${content}</div>
-  `
+  return `<div class="cell" contenteditable>${content}</div>`
 }
 
-function createRow(content, rowNumber) {
-  return `
-    <div class="row">
-      <div class="row-info">${rowNumber}</div>
-      <div class="row-data">${content}</div>
-    </div>
-  `
+function createRow(content, rowNumber = '') {
+  return `<div class="row">
+            <div class="row-info">
+              ${rowNumber}
+              ${rowNumber?'<div class="row-resize"></div>':''}
+            </div>
+            <div class="row-data">${content}</div>
+          </div>`
 }
 
 function toChar(_, index) {
