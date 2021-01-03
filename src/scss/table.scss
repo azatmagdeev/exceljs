@@ -54,6 +54,7 @@
         border-top: none;
         border-left: none;
         white-space: nowrap;
+        overflow: hidden;
 
         &.selected {
           border: none;
