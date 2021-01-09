@@ -35,7 +35,7 @@
         left: 0;
         right: 0;
         height: 4px;
-        background: $prymary-color;
+        background: $primary-color;
         opacity: 0;
       }
 
@@ -71,11 +71,16 @@
           top: 0;
           bottom: 0;
           width: 4px;
-          background: $prymary-color;
+          background: $primary-color;
         }
 
         .col-resize:hover {
           cursor: col-resize;
+        }
+
+        .col-resize:active {
+          height: 100vh;
+          z-index: 1
         }
       }
 
@@ -95,7 +100,7 @@
 
         &.selected {
           border: none;
-          outline: 2px solid $prymary-color;
+          outline: 2px solid $primary-color;
           z-index: 2;
         }
       }

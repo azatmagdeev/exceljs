@@ -4,9 +4,9 @@ const CODES = {
 }
 
 function createCol(content) {
-  return `<div class="column">
+  return `<div class="column" data-type="resizable">
             ${content}
-            <div class="col-resize"></div>
+            <div class="col-resize" data-resize="col"></div>
           </div>`
 }
 
@@ -18,7 +18,7 @@ function createRow(content, rowNumber = '') {
   return `<div class="row">
             <div class="row-info">
               ${rowNumber}
-              ${rowNumber?'<div class="row-resize"></div>':''}
+              ${rowNumber?'<div class="row-resize" data-resize="row"></div>':''}
             </div>
             <div class="row-data">${content}</div>
           </div>`

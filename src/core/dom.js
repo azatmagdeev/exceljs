@@ -1,4 +1,3 @@
-// eslint-disable-next-line require-jsdoc
 class Dom {
   constructor(selector) {
     this.$el = typeof selector === 'string'
@@ -18,8 +17,8 @@ class Dom {
     return this
   }
 
-  on(eventType, callback) {
-    this.$el.addEventListener(eventType, callback)
+  on(eventType, callback, options = {}) {
+    this.$el.addEventListener(eventType, callback, options)
   }
 
   off(eventType, callback) {
@@ -36,6 +35,10 @@ class Dom {
       this.$el.appendChild(node)
     }
     return this
+  }
+
+  getCoords() {
+    return this.$el.getBoundingClientRect()
   }
 }
 
