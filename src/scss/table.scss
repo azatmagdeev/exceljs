@@ -41,11 +41,18 @@
 
       .row-resize:hover {
         cursor: row-resize;
+        opacity: 1;
+      }
+
+      .row-resize:active {
+        width: 100vw;
+        z-index: 1
       }
     }
 
     .row-info:hover .row-resize {
-      opacity: 1;
+
+
     }
 
     .row-data {
@@ -76,16 +83,13 @@
 
         .col-resize:hover {
           cursor: col-resize;
+          opacity: 1;
         }
 
         .col-resize:active {
           height: 100vh;
           z-index: 1
         }
-      }
-
-      .column:hover .col-resize {
-        opacity: 1;
       }
 
       .cell {
@@ -103,6 +107,12 @@
           outline: 2px solid $primary-color;
           z-index: 2;
         }
+      }
+
+      .cell:focus {
+        border: none;
+        outline: 2px solid $primary-color;
+        z-index: 2;
       }
     }
   }

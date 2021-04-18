@@ -1,8 +1,8 @@
 class Dom {
   constructor(selector) {
     this.$el = typeof selector === 'string'
-      ? document.querySelector(selector)
-      : selector
+            ? document.querySelector(selector)
+            : selector
   }
 
   html(html) {
@@ -40,6 +40,20 @@ class Dom {
   getCoords() {
     return this.$el.getBoundingClientRect()
   }
+
+  get data() {
+    return this.$el.dataset
+  }
+
+  css(styles = {}) {
+    if (styles) {
+      // eslint-disable-next-line guard-for-in
+      for (const stylesKey in styles) {
+        this.$el.style[stylesKey] = styles[stylesKey]
+      }
+    }
+    return this.$el
+  }
 }
 
 export function $(selector) {
@@ -48,6 +62,6 @@ export function $(selector) {
 
 $.create = (tagName, classes = '') => {
   const el = document.createElement(tagName)
-  classes ? el.classList.add(classes) : null
-  return $(el)
+    classes ? el.classList.add(classes) : null
+    return $(el)
 }

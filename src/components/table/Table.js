@@ -9,55 +9,56 @@ export class Table extends ExcelComponent {
     super($root, {
       listeners: ['mousedown'],
     })
-    this.$doc = $(document.documentElement)
-    this.different = 0
-    this.movingEl = {}
   }
 
   toHTML() {
-    return createTable(25)
+    return createTable(2000)
   }
 
   onMousedown(e) {
     if (e.target.dataset.resize) {
-      // if (e.target.dataset.resize === 'col') {
       e.target.style.opacity = '1'
-      //   this.onMousemove = this.onMousemove.bind(this)
-      //   this.onMouseup = this.onMouseup.bind(this)
-      //   this.$doc.on('mousemove', this.onMousemove)
-      //   this.$doc.on('mouseup', this.onMouseup, {once: true})
-      //   // this.$doc.on('mouseout', this.onMouseup, {once: true})
-      // }
-      // const $resizer = $(e.target)
       const $parent = $(e.target.closest('[data-type=resizable]'))
-      // console.log($resizer)
       const coords = $parent.getCoords()
 
-      document.onmousemove = (ev) => {
-        $parent.$el.style.width =
-          (coords.width + ev.pageX - coords.right) + 'px'
+      if (e.target.dataset.resize === 'col') {
+        this.resizeCol(e, $parent, coords)
       }
-
-      document.onmouseup = () => {
-        document.onmousemove = null
-        e.target.style.removeProperty('opacity')
+      if (e.target.dataset.resize === 'row') {
+        this.resizeRow(e, $parent, coords)
       }
     }
   }
 
-  onMousemove(e) {
-    // console.log(e.target)
-    this.different += -e.movementX
-    this.movingEl.style.right = `${this.different}px`
+  resizeCol(e, $parent, coords) {
+    let width = ''
+
+    document.onmousemove = (ev) => {
+      width = (coords.width + ev.pageX - coords.right) + 'px'
+      $parent.css({width: width})
+    }
+
+    document.onmouseup = () => {
+      document.onmousemove = null
+      e.target.style.removeProperty('opacity')
+      this.$root.$el.querySelectorAll(`[data-col="${$parent.data.col}"]`)
+          .forEach((el) => {
+            el.style.width = width
+          })
+    }
   }
 
-  onMouseup(e) {
-    console.log(e.type)
-    this.$doc.off('mousemove', this.onMousemove)
-    this.movingEl.style.removeProperty('opacity')
-    this.movingEl.style.removeProperty('right')
-    this.movingEl.parentElement.style.width =
-      this.movingEl.parentElement.clientWidth + (-this.different) + 'px'
-    this.different = 0
+  resizeRow(e, $parent, coords) {
+    let height = ''
+
+    document.onmousemove = (ev) => {
+      height = (coords.height + ev.pageY - coords.bottom) + 'px'
+      $parent.css({height: height})
+    }
+
+    document.onmouseup = () => {
+      document.onmousemove = null
+      e.target.style.removeProperty('opacity')
+    }
   }
 }
