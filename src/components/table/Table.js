@@ -4,6 +4,7 @@ import {$} from '@core/dom';
 
 export class Table extends ExcelComponent {
   static className = 'excel__table'
+  rows = 5
 
   constructor($root) {
     super($root, {
@@ -12,38 +13,47 @@ export class Table extends ExcelComponent {
   }
 
   toHTML() {
-    return createTable(2000)
+    return createTable(this.rows)
   }
 
   onMousedown(e) {
-    if (e.target.dataset.resize) {
-      e.target.style.opacity = '1'
-      const $parent = $(e.target.closest('[data-type=resizable]'))
-      const coords = $parent.getCoords()
+    const $resizer = $(e.target)
+    if ($resizer.data.resize) {
+      $resizer.css({opacity: 1})
+      // const $parent = $(e.target.closest('[data-type=resizable]'))
+      const coords = $resizer.getCoords()
 
-      if (e.target.dataset.resize === 'col') {
-        this.resizeCol(e, $parent, coords)
+      if ($resizer.data.resize === 'col') {
+        this.resizeCol(e, $resizer, coords)
       }
-      if (e.target.dataset.resize === 'row') {
-        this.resizeRow(e, $parent, coords)
+      if ($resizer.data.resize === 'row') {
+        this.resizeRow(e, $resizer, coords)
       }
     }
   }
 
-  resizeCol(e, $parent, coords) {
-    let width = ''
+  resizeCol(e, $resizer, coords) {
+    let delta = ''
+    const $parent = $(e.target.closest('[data-type=resizable]'))
 
     document.onmousemove = (ev) => {
-      width = (coords.width + ev.pageX - coords.right) + 'px'
-      $parent.css({width: width})
+      delta = -(coords.width + ev.pageX - coords.right) + 'px'
+      $resizer.css({right: delta})
+      console.log({delta})
+      console.log($resizer.$el.offsetLeft);
     }
 
     document.onmouseup = () => {
       document.onmousemove = null
-      e.target.style.removeProperty('opacity')
+      console.log($resizer.$el.offsetLeft);
+      // e.target.style.removeProperty('opacity')
       this.$root.$el.querySelectorAll(`[data-col="${$parent.data.col}"]`)
           .forEach((el) => {
-            el.style.width = width
+            // console.dir(el)
+            console.log($resizer.$el.offsetLeft);
+            el.style.width = $resizer.$el.offsetLeft + 'px'
+
+            console.log(el);
           })
     }
   }
