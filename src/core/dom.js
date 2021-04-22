@@ -45,9 +45,26 @@ class Dom {
     return this.$el.dataset
   }
 
+  /**
+   * Применяет inline стили к DOM-элементу или удаляет стиль
+   * @param {styles} styles стили в формате ключ: значение
+   * @return {Dom} возвращает сам себя для чейна
+   */
   css(styles = {}) {
-    Object.keys(styles).forEach((key) => this.$el.style[key] = styles[key])
-    return this.$el
+    Object.keys(styles).forEach((key) => {
+      if (key === 'remove') this.$el.style.removeProperty(styles[key])
+      else this.$el.style[key] = styles[key]
+    })
+    return this
+  }
+
+  /**
+   * Находит предка по селектору
+   * @param {String} selector
+   * @return {Dom} новый объект
+   */
+  parent( selector ) {
+    return $(this.$el.closest(selector))
   }
 }
 

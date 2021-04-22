@@ -4,7 +4,7 @@ import {$} from '@core/dom';
 
 export class Table extends ExcelComponent {
   static className = 'excel__table'
-  rows = 5
+  rows = 100
 
   constructor($root) {
     super($root, {
@@ -20,55 +20,52 @@ export class Table extends ExcelComponent {
     const $resizer = $(e.target)
     if ($resizer.data.resize) {
       $resizer.css({opacity: 1})
-      // const $parent = $(e.target.closest('[data-type=resizable]'))
       const coords = $resizer.getCoords()
-
       if ($resizer.data.resize === 'col') {
-        this.resizeCol(e, $resizer, coords)
+        this.resizeCol($resizer, coords)
       }
       if ($resizer.data.resize === 'row') {
-        this.resizeRow(e, $resizer, coords)
+        this.resizeRow($resizer, coords)
       }
     }
   }
 
-  resizeCol(e, $resizer, coords) {
-    let delta = ''
-    const $parent = $(e.target.closest('[data-type=resizable]'))
-
+  resizeCol($resizer, coords) {
+    let delta
     document.onmousemove = (ev) => {
-      delta = -(coords.width + ev.pageX - coords.right) + 'px'
-      $resizer.css({right: delta})
-      console.log({delta})
-      console.log($resizer.$el.offsetLeft);
+      delta = ev.pageX - coords.right
+      $resizer.css({right: (-delta)+'px'})
     }
 
     document.onmouseup = () => {
       document.onmousemove = null
-      console.log($resizer.$el.offsetLeft);
-      // e.target.style.removeProperty('opacity')
+      $resizer.css({right: 0, remove: 'opacity'})
+      const $parent = $resizer.parent('[data-type=resizable]')
+      const width = $parent.getCoords().width
+          + 1 // +1 px чтобы мышка оставалась на ресайзере
       this.$root.$el.querySelectorAll(`[data-col="${$parent.data.col}"]`)
           .forEach((el) => {
-            // console.dir(el)
-            console.log($resizer.$el.offsetLeft);
-            el.style.width = $resizer.$el.offsetLeft + 'px'
-
-            console.log(el);
+            $(el).css({width: (width + delta) + 'px'})
           })
     }
   }
 
-  resizeRow(e, $parent, coords) {
-    let height = ''
+  resizeRow($resizer, coords) {
+    let delta
 
     document.onmousemove = (ev) => {
-      height = (coords.height + ev.pageY - coords.bottom) + 'px'
-      $parent.css({height: height})
+      delta = ev.pageY - coords.bottom
+      $resizer.css({bottom: (-delta)+'px'})
     }
 
     document.onmouseup = () => {
       document.onmousemove = null
-      e.target.style.removeProperty('opacity')
+      $resizer.css({bottom: 0, remove: 'opacity'})
+      const $parent = $resizer.parent('[data-type=resizable]')
+      $parent.css({
+        height: ($parent.getCoords().height + delta
+            + 1) + 'px', // +1 px чтобы мышка оставалась на ресайзере
+      })
     }
   }
 }
