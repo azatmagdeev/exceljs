@@ -1,9 +1,8 @@
-// eslint-disable-next-line require-jsdoc
 class Dom {
   constructor(selector) {
     this.$el = typeof selector === 'string'
-      ? document.querySelector(selector)
-      : selector
+        ? document.querySelector(selector)
+        : selector
   }
 
   html(html) {
@@ -18,8 +17,8 @@ class Dom {
     return this
   }
 
-  on(eventType, callback) {
-    this.$el.addEventListener(eventType, callback)
+  on(eventType, callback, options = {}) {
+    this.$el.addEventListener(eventType, callback, options)
   }
 
   off(eventType, callback) {
@@ -37,6 +36,45 @@ class Dom {
     }
     return this
   }
+
+  getCoords() {
+    return this.$el.getBoundingClientRect()
+  }
+
+  get data() {
+    return this.$el.dataset
+  }
+
+  /**
+   * Применяет inline стили к DOM-элементу или удаляет стиль
+   * @param {{}} styles стили в формате ключ: значение
+   * @return {Dom} возвращает сам себя для чейна
+   */
+  css(styles = {}) {
+    Object.keys(styles).forEach((key) => {
+      if (key === 'remove') this.$el.style.removeProperty(styles[key])
+      else this.$el.style[key] = styles[key]
+    })
+    return this
+  }
+
+  /**
+   * Находит предка по селектору
+   * @param {String} selector
+   * @return {Dom} новый объект
+   */
+  parent(selector) {
+    return $(this.$el.closest(selector))
+  }
+
+  /**
+   * Находит потомка по селектору
+   * @param {String} selector
+   * @return {HTMLCollection}
+   */
+  children(selector) {
+    return this.$el.querySelectorAll(selector)
+  }
 }
 
 export function $(selector) {
@@ -45,6 +83,6 @@ export function $(selector) {
 
 $.create = (tagName, classes = '') => {
   const el = document.createElement(tagName)
-  classes ? el.classList.add(classes) : null
-  return $(el)
+    classes ? el.classList.add(classes) : null
+    return $(el)
 }
