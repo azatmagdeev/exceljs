@@ -1,8 +1,8 @@
 class Dom {
   constructor(selector) {
     this.$el = typeof selector === 'string'
-            ? document.querySelector(selector)
-            : selector
+        ? document.querySelector(selector)
+        : selector
   }
 
   html(html) {
@@ -47,7 +47,7 @@ class Dom {
 
   /**
    * Применяет inline стили к DOM-элементу или удаляет стиль
-   * @param {styles} styles стили в формате ключ: значение
+   * @param {{}} styles стили в формате ключ: значение
    * @return {Dom} возвращает сам себя для чейна
    */
   css(styles = {}) {
@@ -63,8 +63,17 @@ class Dom {
    * @param {String} selector
    * @return {Dom} новый объект
    */
-  parent( selector ) {
+  parent(selector) {
     return $(this.$el.closest(selector))
+  }
+
+  /**
+   * Находит потомка по селектору
+   * @param {String} selector
+   * @return {HTMLCollection}
+   */
+  children(selector) {
+    return this.$el.querySelectorAll(selector)
   }
 }
 

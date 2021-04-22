@@ -43,7 +43,7 @@ export class Table extends ExcelComponent {
       const $parent = $resizer.parent('[data-type=resizable]')
       const width = $parent.getCoords().width
           + 1 // +1 px чтобы мышка оставалась на ресайзере
-      this.$root.$el.querySelectorAll(`[data-col="${$parent.data.col}"]`)
+      this.$root.children(`[data-col="${$parent.data.col}"]`)
           .forEach((el) => {
             $(el).css({width: (width + delta) + 'px'})
           })
