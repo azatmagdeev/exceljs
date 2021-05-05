@@ -8,7 +8,7 @@
   "rules": {
     "semi": "off",
     "operator-linebreak": "off",
-    "require-jsdoc": "off",
+//    "require-jsdoc": "off",
     "linebreak-style": "off"
   },
   "extends": [

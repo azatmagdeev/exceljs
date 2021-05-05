@@ -1,6 +1,14 @@
 import {capitalize} from '@core/util';
 
+/**
+ * Класс навешивания слушателей событий на DOM элементы
+ */
 export class DOMListener {
+  /**
+   * Конструктор
+   * @param {Dom} $root
+   * @param {string[]} listeners
+   */
   constructor($root, listeners = []) {
     if (!$root) {
       throw new Error('No $root for DOMListener')
@@ -30,6 +38,11 @@ export class DOMListener {
   }
 }
 
+/**
+ * Создает имя метода из имени события
+ * @param {string} eventName имя события
+ * @return {string} имя метода
+ */
 function getMethodName(eventName) {
   return 'on' + capitalize(eventName)
 }
