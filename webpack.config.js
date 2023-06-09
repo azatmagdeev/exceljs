@@ -49,7 +49,7 @@ module.exports = {
   devServer: {
     port: 3003,
     hot: true,
-    index: 'index.html',
+    // index: 'index.html',
   },
   target: isDev ? 'web' : 'browserslist',
   plugins: [
