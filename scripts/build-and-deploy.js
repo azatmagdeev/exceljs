@@ -9,8 +9,8 @@ const { copySync } = require('fs-extra');
 
         execSync("npm run build")
         execSync("git checkout prod");
-        const sourcePath = join(__dirname, '../dist');
-        const targetPath = join(__dirname, '../');
+        const sourcePath = path.join(__dirname, '../dist');
+        const targetPath = path.join(__dirname, '../');
         copySync(sourcePath, targetPath);
         execSync('git add .');
         execSync('git commit -m "Add built files"');
